@@ -1,0 +1,27 @@
+{
+  "name": "ep3-laying-the-foundation",
+  "version": "1.0.0",
+  "description": "ep3",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chetan96k/ReactJS.git"
+  },
+  "author": "Chetan Kanti",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Chetan96k/ReactJS/issues"
+  },
+  "homepage": "https://github.com/Chetan96k/ReactJS#readme",
+  "devDependencies": {
+    "parcel": "^2.15.2"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}
