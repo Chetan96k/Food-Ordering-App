@@ -1,46 +1,68 @@
 import RestaurantCard from "./RestaurantCard";
 import resList from "../utils/mockData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
+import Shimmer from "./Shimmer";
 
 const Body = () => {
     // super powerful local state variable
-    const [listOfRestaurants, setListOfRestaurants] = useState(resList);
+    const [listOfRestaurants, setListOfRestaurants] = useState([]);
+    const [originalList, setOriginalList] = useState([]);
+    const [query, setQuery] = useState("");
 
-    // normal JS variable
-    // let listOfRestaurantsJS = [
-    //     {
-    //         "id": 1,
-    //         "name": "Spicy Bites",
-    //         "cuisines": ["Indian", "Biryani", "Tandoori"],
-    //         "rating": 3.9,
-    //         "deliveryTime": "30 mins",
-    //         "distance": "2.1 km",
-    //         "costForTwo": "₹300 for two",
-    //         "isVeg": false,
-    //         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJDyOhEO_OnIe_QQ8afV1yhGgbUGidSDQl9g&s"
-    //     },
-    //     {
-    //         "id": 2,
-    //         "name": "Green Leaf",
-    //         "cuisines": ["South Indian", "Vegan"],
-    //         "rating": 4.6,
-    //         "deliveryTime": "25 mins",
-    //         "distance": "1.5 km",
-    //         "costForTwo": "₹250 for two",
-    //         "isVeg": true,
-    //         "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHjX1ZTt8dB3INdkQ_tcY_pge3H1jk-BaNEg&s"
-    //     }
-    // ];
+    useEffect(() => {
+        fetchData();
+    }, []);
 
-    return (
+    const fetchData = async () => {
+        const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=15.8496953&lng=74.4976741&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+        const json = await data.json();
+
+        //optional chaining
+        const restaurants = json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+
+        console.log(restaurants);
+        setListOfRestaurants(restaurants);
+        setOriginalList(restaurants);
+    }
+
+    const handleSearch = () => {
+        const filtered = originalList.filter((restaurant) =>
+            restaurant.info.name.toLowerCase().includes(query.toLowerCase())
+        );
+        setListOfRestaurants(filtered);
+    };
+
+    //conditional rendering via ternary operator
+    return listOfRestaurants.length === 0 ? (
         <div className="body">
             <div className="filter">
-                <SearchBar />
+                <SearchBar
+                    query={query}
+                    setQuery={setQuery}
+                    onSearch={handleSearch}
+                />
+                <p>Filters :</p>
+                <button className="filter-btn">
+                    Top restaurant
+                </button>
+
+            </div>
+            <Shimmer />
+        </div>
+    ) : (
+        <div className="body">
+            <div className="filter">
+                <SearchBar
+                    query={query}
+                    setQuery={setQuery}
+                    onSearch={handleSearch}
+                />
+                <p>Filters :</p>
                 <button className="filter-btn"
                     onClick={() => {
-                        const filteredList = listOfRestaurants.filter(
-                            (restaurant) => restaurant.rating > 4
+                        const filteredList = originalList.filter(
+                            (restaurant) => restaurant.info.avgRating > 4
                         );
                         setListOfRestaurants(filteredList);
                     }}>
@@ -49,9 +71,11 @@ const Body = () => {
 
             </div>
             <div className="restaurant-container">
-                {listOfRestaurants.map((restaurant) => (
-                    <RestaurantCard key={restaurant.id} resData={restaurant} />
-                ))}
+                {listOfRestaurants.map((restaurant, index) =>
+                    restaurant.info ? (
+                        <RestaurantCard key={restaurant.info.id || index} resData={restaurant.info} />
+                    ) : null
+                )}
             </div>
         </div>
     )

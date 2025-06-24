@@ -3,6 +3,13 @@
   padding: 0;
 }
 
+/* hiding the scroll bar */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -29,6 +36,7 @@
 
 .nav-items > ul {
   font-size: 20px;
+  font-weight: bold;
   display: flex;
   align-items: center;
   list-style-type: none;
@@ -36,10 +44,33 @@
 }
 
 .nav-items > ul > li {
-  padding: 10px 40px;
+  margin: 10px;
+  padding: 10px 20px;
+  transition: color 0.2s ease;   /* Smooth color transition */
+  width: 80px;
 }
 
+.nav-items > ul > li:hover {
+  color: #fc8019;                /* Swiggy red on hover */
+  cursor: pointer;               /* Pointer cursor on hover */
+}
+
+
+.signin-btn {
+  font: inherit;           /* Inherits font from parent <li> */
+}
+
+
 .restaurant-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 1400px;
+  /* padding: 10px 100px; */
+  margin: auto;
+  justify-content: center;
+}
+
+.shimmer-container {
   display: flex;
   flex-wrap: wrap;
   width: 1400px;
@@ -52,30 +83,31 @@
   width: 300px;
   height: 350px;
   margin: 20px;
+  transition: transform 0.1s ease;
+}
+
+.shimmer-card {
+  height: 210px;
+  width: 300px;
+  border-radius: 20px;
+  margin: 20px;
+  background-color: lightgray;
 }
 
 .restaurant-card:hover {
   cursor: pointer;
-  transform: scale(1.05); /* Grows the card by 5% */
+  transform: scale(0.95); /* Grows the card by -5% */
 }
 
-.restaurant-card > h3 {
-  margin: 4px 0px;
-}
-
-.restaurant-card > h4,
-p {
-  margin: 5px 0px;
-}
-
-.search {
-  margin: 30px;
-  padding: 10px;
-  width: 400px;
+.restaurant-card > h3, p {
+  margin: 5px 15px; /* Adds 5px space above and below each <p>, and 0px on left/right */
+  white-space: nowrap; /* Prevents the text from wrapping to the next line */
+  overflow: hidden; /* Hides any text that goes beyond the width of the container */
+  text-overflow: ellipsis; /* Shows '...' at the end of the line when text overflows */
 }
 
 .restaurant-image {
-  height: 200px;
+  height: 210px;
   width: 100%;
   border-radius: 20px;
 }
@@ -88,9 +120,45 @@ p {
 
 .filter-btn {
   margin: 30px;
-  padding: 10px;
+  padding: 10px 20px;
   border: none;
-  background-color: rgb(0, 0, 0);
+  background-color: black;
   color: white;
   border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.filter-btn:hover {
+  transform: scale(1.05); /* Grows the button to 105% of its size */
+}
+
+
+.search {
+  margin: 30px;
+  padding: 10px;
+}
+
+.search-bar {
+  width: 300px;
+  padding: 10px 20px;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+.search-btn {
+  margin: 30px;
+  padding: 10px 20px;
+  border: none;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.search-btn:hover {
+  transform: scale(1.05); /* Grows the button to 105% of its size */
 }
