@@ -1,0 +1,1 @@
+export const LOGO_IMG = "https://img.freepik.com/free-vector/vegetarian-food-menu_24877-50862.jpg";
