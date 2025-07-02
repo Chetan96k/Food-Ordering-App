@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { LOGO_IMG } from "../utils/constants";
+import { Link } from "react-router-dom";
 
 const Header = () => {
     const [btnName, setBtnName] = useState("Sign In");
@@ -12,8 +13,8 @@ const Header = () => {
             </div>
             <div className="nav-items">
                 <ul>
-                    <li>Home</li>
-                    <li>Help</li>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/Help">Help</Link></li>
                     <li className="signin-btn" onClick={() => {
                         setBtnName(btnName === "Sign In" ? "Sign Out" : "Sign In")
                     }}>{btnName}</li>
