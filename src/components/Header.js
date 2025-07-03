@@ -3,7 +3,7 @@ import { LOGO_IMG } from "../utils/constants";
 import { Link } from "react-router-dom";
 
 const Header = () => {
-    const [btnName, setBtnName] = useState("Sign In");
+    const [btnName, setBtnName] = useState("Log out");
     return (
         <div className="header">
             <div className="logo-container">
@@ -13,11 +13,11 @@ const Header = () => {
             </div>
             <div className="nav-items">
                 <ul>
-                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/home">Home</Link></li>
                     <li><Link to="/Help">Help</Link></li>
                     <li className="signin-btn" onClick={() => {
-                        setBtnName(btnName === "Sign In" ? "Sign Out" : "Sign In")
-                    }}>{btnName}</li>
+                        setBtnName(btnName === "Log In" ? "Log Out" : "Log In")
+                    }}><Link to="/">{btnName}</Link></li>
                     <li>Cart</li>
                 </ul>
             </div>

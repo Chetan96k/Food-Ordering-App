@@ -4,6 +4,9 @@ import Body from "./components/Body";
 import Help from "./components/Help";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
+import LoginForm from "./components/LoginForm";
+import SignupForm from "./components/SignupForm";
+
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 
 const App = () => {
@@ -24,11 +27,23 @@ const appRouter = createBrowserRouter([
         children: [
             {
                 path: "/",
+                element: <LoginForm />,
+            },
+            {
+                path: "/home",
                 element: <Body />,
             },
             {
                 path: "/help",
                 element: <Help />,
+            },
+            {
+                path: "/login",
+                element: <LoginForm />,
+            },
+            {
+                path: "/signup",        
+                element: <SignupForm />,
             },
             {
                 path: "/restaurants/:resId",
