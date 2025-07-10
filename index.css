@@ -66,11 +66,9 @@
 
 /* Hover effect */
 .nav-items > ul > li:hover {
-  color: #fc8019;
+  color: #ff0000;
   cursor: pointer;
 }
-
-
 
 .signin-btn {
   font: inherit;           /* Inherits font from parent <li> */
@@ -361,14 +359,14 @@
   font-size: 1rem;
   border: none;
   border-radius: 8px;
-  background-color: #fc8019;
+  background-color: #ff5a5a;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .help-button:hover {
-  background-color: #e76d10;
+  background-color: #ff0000;
 }
 
 /* login form */

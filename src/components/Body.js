@@ -3,28 +3,20 @@ import { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import useRestaurantList from "../utils/useRestaurantList";
 
 const Body = () => {
     // super powerful local state variable
+    const restaurants = useRestaurantList(); // ⬅️ Correct usage of the custom hook
     const [listOfRestaurants, setListOfRestaurants] = useState([]);
     const [originalList, setOriginalList] = useState([]);
     const [query, setQuery] = useState("");
 
+    // When the data is fetched by the hook, set both states
     useEffect(() => {
-        fetchData();
-    }, []);
-
-    const fetchData = async () => {
-        const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=15.8496953&lng=74.4976741&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
-        const json = await data.json();
-
-        //optional chaining
-        const restaurants = json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
-
-        console.log(restaurants);
         setListOfRestaurants(restaurants);
         setOriginalList(restaurants);
-    }
+    }, [restaurants]);
 
     const handleSearch = () => {
         const filtered = originalList.filter((restaurant) =>
@@ -67,7 +59,7 @@ const Body = () => {
                         setListOfRestaurants(filteredList);
                     }}>
                     Top restaurant
-                </button>
+                </button> 
 
             </div>
             <div className="restaurant-container">

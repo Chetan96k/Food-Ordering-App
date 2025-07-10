@@ -1,29 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ShimmerRestaurant from "./ShimmerRestaurant";
 import { useParams } from "react-router";
-import { RES_INFO } from "../utils/constants";
+import useRestaurantMenu from "../utils/useRestaurantMenu";
+
 
 const RestaurantMenu = () => {
-    const [resInfo, setResInfo] = useState(null);
     const [openIndex, setOpenIndex] = useState(null); // toggle dropdown state
 
     const { resId } = useParams();
 
-    useEffect(() => {
-        fetchMenu();
-    }, []);
-
-    const fetchMenu = async () => {
-        try {
-            const data = await fetch(
-                RES_INFO + resId + "&catalog_qa=undefined"//296025
-            );
-            const json = await data.json();
-            setResInfo(json.data);
-        } catch (error) {
-            console.error("Error fetching menu:", error);
-        }
-    };
+    const resInfo = useRestaurantMenu(resId);
 
     if (!resInfo) return <ShimmerRestaurant />;
 

@@ -14,7 +14,8 @@ const Header = () => {
             <div className="nav-items">
                 <ul>
                     <li><Link to="/home">Home</Link></li>
-                    <li><Link to="/Help">Help</Link></li>
+                    <li><Link to="/about">About Us</Link></li>
+                    <li><Link to="/help">Help</Link></li>
                     <li className="signin-btn" onClick={() => {
                         setBtnName(btnName === "Log In" ? "Log Out" : "Log In")
                     }}><Link to="/">{btnName}</Link></li>
