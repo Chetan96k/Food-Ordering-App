@@ -1,69 +1,65 @@
 import RestaurantCard from "./RestaurantCard";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
-import useRestaurantList from "../utils/useRestaurantList";
+import useRestaurantList from "../hooks/useRestaurantList";
+import useSearchFilter from "../hooks/useSearchFilter";
+import useTopRestaurantsFilter from "../hooks/useTopRestaurantsFilter";
+import useOnlineStatus from "../hooks/useOnlineStatus";
 
 const Body = () => {
-    // super powerful local state variable
-    const restaurants = useRestaurantList(); // ⬅️ Correct usage of the custom hook
-    const [listOfRestaurants, setListOfRestaurants] = useState([]);
-    const [originalList, setOriginalList] = useState([]);
+    const originalList = useRestaurantList();
     const [query, setQuery] = useState("");
+    const [showTopRated, setShowTopRated] = useState(false);
 
-    // When the data is fetched by the hook, set both states
+    const [filteredList, filterByQuery, resetList] = useSearchFilter(originalList);
+
     useEffect(() => {
-        setListOfRestaurants(restaurants);
-        setOriginalList(restaurants);
-    }, [restaurants]);
+        // Reset list if new data is fetched
+        resetList();
+    }, [originalList]);
 
     const handleSearch = () => {
-        const filtered = originalList.filter((restaurant) =>
-            restaurant.info.name.toLowerCase().includes(query.toLowerCase())
-        );
-        setListOfRestaurants(filtered);
+        filterByQuery(query);
+        setShowTopRated(false); // Optional: reset top filter on new search
     };
 
-    //conditional rendering via ternary operator
-    return listOfRestaurants.length === 0 ? (
+    const finalList = showTopRated ? useTopRestaurantsFilter(filteredList) : filteredList;
+
+    const onlineStatus = useOnlineStatus();
+    if(onlineStatus === false) {
+        return (<div className="body"><h2>You are offline</h2></div>);
+    }
+
+    return finalList.length === 0 ? (
         <div className="body">
             <div className="filter">
-                <SearchBar
-                    query={query}
-                    setQuery={setQuery}
-                    onSearch={handleSearch}
-                />
+                <SearchBar query={query} setQuery={setQuery} onSearch={handleSearch} />
                 <p>Filters :</p>
-                <button className="filter-btn">
-                    Top restaurant
+                <button
+                    className="filter-btn"
+                    onClick={() => setShowTopRated(!showTopRated)}
+                >
+                    {showTopRated ? "Show All" : "Top Restaurants"}
                 </button>
-
             </div>
             <Shimmer />
         </div>
     ) : (
         <div className="body">
             <div className="filter">
-                <SearchBar
-                    query={query}
-                    setQuery={setQuery}
-                    onSearch={handleSearch}
-                />
+                <SearchBar query={query} setQuery={setQuery} onSearch={handleSearch} />
                 <p>Filters :</p>
-                <button className="filter-btn"
-                    onClick={() => {
-                        const filteredList = originalList.filter(
-                            (restaurant) => restaurant.info.avgRating > 4
-                        );
-                        setListOfRestaurants(filteredList);
-                    }}>
-                    Top restaurant
-                </button> 
-
+                <button
+                    className="filter-btn"
+                    onClick={() => setShowTopRated(!showTopRated)}
+                >
+                    {showTopRated ? "Show All" : "Top Restaurants"}
+                </button>
             </div>
             <div className="restaurant-container">
-                {listOfRestaurants.map((restaurant, index) =>
+                {finalList.map((restaurant, index) =>
                     restaurant.info ? (
                         <Link
                             to={`/restaurants/${restaurant.info.id}`}
@@ -75,9 +71,8 @@ const Body = () => {
                     ) : null
                 )}
             </div>
-
         </div>
-    )
-}
+    );
+};
 
 export default Body;
