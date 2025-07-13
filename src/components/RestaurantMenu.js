@@ -31,47 +31,59 @@ const RestaurantMenu = () => {
     };
 
     return (
-        <div className="res-info-container">
-            <h1 className="res-name">{name}</h1>
-            <h3 className="res-cuisines">
-                {cuisines?.join(", ")}
-            </h3>
-            <h2 className="menu-title">Menu</h2>
+        <div className="w-full max-w-7xl mx-auto px-4 mt-10">
+            <div className="bg-white border border-gray-200 rounded-2xl p-10 shadow-xl w-full">
+                <h1 className="text-4xl font-extrabold text-gray-900 mb-2">{name}</h1>
+                <h3 className="text-lg text-gray-500 mb-5 tracking-wide">{cuisines?.join(", ")}</h3>
 
+                <h2 className="text-2xl font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-2">
+                    Menu
+                </h2>
 
-            {categories.map((category, index) => {
-                const itemCards = category.card.card.itemCards || [];
-                const categoryTitle = category.card.card.title;
+                {categories.map((category, index) => {
+                    const itemCards = category.card.card.itemCards || [];
+                    const categoryTitle = category.card.card.title;
 
-                console.log(index);
+                    return (
+                        <div key={categoryTitle + index} className="mb-8">
+                            {/* Category Header */}
+                            <div
+                                className="flex justify-between items-center cursor-pointer bg-white px-1 py-2 border-b border-gray-300"
+                                onClick={() => toggleCategory(index)}
+                            >
+                                <h3 className="text-2xl font-semibold text-gray-900 tracking-wide">{categoryTitle}</h3>
+                                <span className="text-lg text-gray-500">
+                                    {openIndex === index ? "▲" : "▼"}
+                                </span>
+                            </div>
 
-                return (
-                    <div key={categoryTitle + index} className="menu-category">
-                        <div
-                            className="category-header"
-                            onClick={() => toggleCategory(index)}
-                        >
-                            <h3>{categoryTitle}</h3>
-                            <span>{openIndex === index ? "▲" : "▼"}</span>
+                            {/* Menu Items */}
+                            {openIndex === index && (
+                                <ul className="pl-4 pr-10 mt-5 space-y-4">
+                                    {itemCards.map((item) => {
+                                        const { id, name, price } = item.card.info;
+                                        return (
+                                            <li
+                                                key={id}
+                                                className="p-4 bg-gray-50 rounded-xl shadow-sm border border-gray-200"
+                                            >
+                                                <div className="flex justify-between items-center">
+                                                    <h4 className="text-lg font-medium text-gray-800">{name}</h4>
+                                                    <span className="text-lg font-semibold text-gray-900">₹{price / 100}</span>
+                                                </div>
+                                            </li>
+                                        );
+                                    })}
+                                </ul>
+                            )}
                         </div>
-
-                        {openIndex === index && (
-                            <ul className="menu-items">
-                                {itemCards.map((item) => {
-                                    const { id, name, price } = item.card.info;
-                                    return (
-                                        <li key={id} className="menu-item">
-                                            {name} - ₹{price / 100}
-                                        </li>
-                                    );
-                                })}
-                            </ul>
-                        )}
-                    </div>
-                );
-            })}
+                    );
+                })}
+            </div>
         </div>
     );
+
+
 };
 
 export default RestaurantMenu;
