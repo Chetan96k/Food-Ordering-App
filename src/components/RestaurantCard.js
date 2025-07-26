@@ -1,6 +1,6 @@
 const RestaurantCard = (props) => {
-  const { resData } = props;
-  const { name, cuisines, avgRating, sla, cloudinaryImageId } = resData;
+  const { resData, ratingColor } = props;
+  const { name, cuisines, avgRating, sla, cloudinaryImageId, locality } = resData;
 
   return (
     <div className="w-[300px] mb-1.5 transition-transform duration-100 ease-in hover:scale-[0.97] cursor-pointer rounded-xl bg-white">
@@ -13,14 +13,32 @@ const RestaurantCard = (props) => {
         alt="food"
       />
       <div className="px-3 flex flex-col">
-        <h3 className="text-[22px] font-bold text-[#02060c] truncate mt-[6px] mb-[6px]">{name}</h3>
-        <p className="text-[15px] text-[#686b78] truncate mb-[4px]">{cuisines.join(", ")}</p>
-        <p className="text-[14px] text-[#535665] font-medium mb-[2px]">
-          ⭐ {avgRating} • {sla.deliveryTime} mins
+        <h3 className="text-[22px] font-bold text-[#02060c] truncate mt-[6px]">{name}</h3>
+        <p className="text-[14px] font-medium mb-[6px]">
+          ⭐ <span className={`px-2 py-[2px] rounded ${ratingColor}`}>{avgRating}</span> • {sla.deliveryTime} mins
         </p>
+        <p className="text-[15px] text-[#686b78] truncate mb-[1px]">{cuisines.join(", ")}</p>
+        <p className="text-[15px] text-[#686b78] truncate">{locality} • {sla.lastMileTravelString}</p>
       </div>
     </div>
   );
 };
+
+
+// src/components/hoc/withRatingColor.jsx
+
+export const withRatingColor = (RestaurantCard) => {
+  return (props) => {
+    const { avgRating } = props.resData;
+
+    let ratingColor = "bg-gray-300 text-black"; // default
+    if (avgRating > 4.3) ratingColor = "bg-green-500 text-white";
+    else if (avgRating > 3.7) ratingColor = "bg-yellow-400 text-black";
+    else ratingColor = "bg-red-500 text-white";
+
+    return <RestaurantCard {...props} ratingColor={ratingColor} />;
+  };
+};
+
 
 export default RestaurantCard;

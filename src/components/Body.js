@@ -1,8 +1,9 @@
-import RestaurantCard from "./RestaurantCard";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import RestaurantCard, { withRatingColor } from "./RestaurantCard";
 import SearchBar from "./SearchBar";
 import Shimmer from "./Shimmer";
-import { Link } from "react-router-dom";
+import TopRatedFilter from "./TopRatedFilter";
 import useRestaurantList from "../hooks/useRestaurantList";
 import useSearchFilter from "../hooks/useSearchFilter";
 import useTopRestaurantsFilter from "../hooks/useTopRestaurantsFilter";
@@ -14,6 +15,8 @@ const Body = () => {
   const [showTopRated, setShowTopRated] = useState(false);
 
   const [filteredList, filterByQuery, resetList] = useSearchFilter(originalList);
+
+  const ColorRatedRestaurantCard = withRatingColor(RestaurantCard);
 
   useEffect(() => {
     resetList();
@@ -38,21 +41,14 @@ const Body = () => {
     );
   }
 
+  console.log("Final List:", finalList);
+
   return finalList.length === 0 ? (
     <div className="mt-6 flex flex-col items-center w-full">
       {/* Search & Filter Section */}
       <div className="w-full max-w-7xl flex flex-wrap justify-evenly items-center gap-6 px-4 py-6 bg-white">
         <SearchBar query={query} setQuery={setQuery} onSearch={handleSearch} />
-        <div className="flex items-center gap-4">
-          <span className="font-medium text-gray-600">Filters:</span>
-          <button
-            className="px-5 py-2.5 bg-black text-white rounded-md font-medium hover:bg-gray-800 transition duration-200"
-            onClick={() => setShowTopRated(!showTopRated)}
-          >
-            {showTopRated ? "Show All" : "Top Restaurants"}
-          </button>
-        </div>
-
+        <TopRatedFilter showTopRated={showTopRated} setShowTopRated={setShowTopRated} />
       </div>
 
       {/* Shimmer Placeholder */}
@@ -65,20 +61,11 @@ const Body = () => {
       {/* Search & Filter Section */}
       <div className="w-full max-w-7xl flex flex-wrap justify-evenly items-center gap-6 px-4 py-6 bg-white">
         <SearchBar query={query} setQuery={setQuery} onSearch={handleSearch} />
-        <div className="flex items-center gap-4">
-          <span className="font-medium text-gray-600">Filters:</span>
-          <button
-            className="px-5 py-2.5 bg-black text-white rounded-md font-medium hover:bg-gray-800 transition duration-200"
-            onClick={() => setShowTopRated(!showTopRated)}
-          >
-            {showTopRated ? "Show All" : "Top Restaurants"}
-          </button>
-        </div>
-
+        <TopRatedFilter showTopRated={showTopRated} setShowTopRated={setShowTopRated} />
       </div>
 
       {/* Restaurant Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 w-full max-w-7xl  mt-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 w-full max-w-7xl mt-10">
         {finalList.map((restaurant, index) =>
           restaurant.info ? (
             <Link
@@ -86,7 +73,7 @@ const Body = () => {
               key={restaurant.info.id || index}
               className="hover:scale-[1.0] transition-transform duration-200"
             >
-              <RestaurantCard resData={restaurant.info} />
+              <ColorRatedRestaurantCard resData={restaurant.info} />
             </Link>
           ) : null
         )}
