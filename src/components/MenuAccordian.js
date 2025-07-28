@@ -35,7 +35,7 @@ const MenuAccordian = ({ categoryTitle, itemCards, openIndex, toggleCategory, in
                                         )}
                                     </p>
                                     <h4 className="text-xl font-bold text-gray-800">{name}</h4>
-                                    <span className="text-lg font-semibold text-gray-900">₹{price / 100}</span>
+                                    <span className="text-lg font-semibold text-gray-900">₹{price ? price / 100 : 100}</span>
                                     {ratings?.aggregatedRating?.rating && (
                                         <p>⭐{ratings.aggregatedRating.rating}</p>
                                     )}
@@ -43,26 +43,23 @@ const MenuAccordian = ({ categoryTitle, itemCards, openIndex, toggleCategory, in
                                     <p className="text-sm text-gray-600 mt-2 line-clamp-2">{description}</p>
 
                                 </div>
-        
+
                                 <div className="mt-2 relative w-38 h-36">
                                     {imageId ? (
-                                        <>
-                                            <img
-                                                src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/" + imageId}
-                                                alt={name}
-                                                className="w-full h-full object-cover rounded-lg"
-                                            />
-                                            <button className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2 px-10 py-2 text-lg font-bold text-green-600 bg-white border border-gray-300 rounded-md shadow-md hover:bg-gray-100 transition">
-                                                ADD
-                                            </button>
-                                        </>
+                                        <img
+                                            src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${imageId}`}
+                                            alt={name || "Food Item"}
+                                            className="w-full h-full object-cover rounded-lg"
+                                        />
                                     ) : (
-                                        <div className="w-full h-full flex items-center justify-center">
-                                            <button className="px-10 py-2 text-lg font-bold text-green-600 bg-white border border-gray-300 rounded-md shadow-md hover:bg-gray-100 transition">
-                                                ADD
-                                            </button>
+                                        <div className="w-full h-full bg-gray-100 flex items-center justify-center rounded-lg">
+                                            <span className="text-gray-400 text-sm font-medium">No Image Available</span>
                                         </div>
                                     )}
+
+                                    <button className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2 px-10 py-2 text-lg font-bold text-green-600 bg-white border border-gray-300 rounded-md shadow-md hover:bg-gray-100 transition">
+                                        ADD
+                                    </button>
                                 </div>
 
                             </div>

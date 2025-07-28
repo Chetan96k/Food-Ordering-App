@@ -3,7 +3,7 @@ const RestaurantCard = (props) => {
   const { name, cuisines, avgRating, sla, cloudinaryImageId, locality } = resData;
 
   return (
-    <div className="w-[300px] mb-1.5 transition-transform duration-100 ease-in hover:scale-[0.97] cursor-pointer rounded-xl bg-white">
+    <div className="w-full max-w-[300px] mb-1.5 transition-transform duration-100 ease-in hover:scale-[0.97] cursor-pointer rounded-xl bg-white">
       <img
         className="h-[210px] w-full rounded-[20px] object-cover"
         src={
@@ -14,8 +14,8 @@ const RestaurantCard = (props) => {
       />
       <div className="px-3 flex flex-col">
         <h3 className="text-[22px] font-bold text-[#02060c] truncate mt-[6px]">{name}</h3>
-        <p className="text-[14px] font-medium mb-[6px]">
-          ⭐ <span className={`px-2 py-[2px] rounded ${ratingColor}`}>{avgRating}</span> • {sla.deliveryTime} mins
+        <p className="text-[14px] font-medium mt-[4px] mb-[6px]">
+          ⭐ <span className={` px-1.5 py-[1px] rounded ${ratingColor}`}>{avgRating}</span> • {sla.deliveryTime} mins
         </p>
         <p className="text-[15px] text-[#686b78] truncate mb-[1px]">{cuisines.join(", ")}</p>
         <p className="text-[15px] text-[#686b78] truncate">{locality} • {sla.lastMileTravelString}</p>
@@ -26,7 +26,6 @@ const RestaurantCard = (props) => {
 
 
 // src/components/hoc/withRatingColor.jsx
-
 export const withRatingColor = (RestaurantCard) => {
   return (props) => {
     const { avgRating } = props.resData;

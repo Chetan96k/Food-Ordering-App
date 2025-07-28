@@ -11,14 +11,15 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 
 const App = () => {
     return (
-        <div className="App min-h-screen px-4 sm:px-6 md:px-10 xl:px-20">
+        <div className="App min-h-screen flex flex-col px-4 sm:px-6 md:px-10 xl:px-20">
             <Header />
-            <div className="body-container">
+            <main className="flex-grow body-container mt-4">
                 <Outlet />
-            </div>
+            </main>
         </div>
     );
 };
+
 
 const appRouter = createBrowserRouter([
     {

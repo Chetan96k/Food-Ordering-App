@@ -26,6 +26,7 @@
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.11",
     "formik": "^2.4.6",
+    "lucide-react": "^0.528.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router": "^6.30.1",

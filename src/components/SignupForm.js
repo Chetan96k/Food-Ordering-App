@@ -12,7 +12,7 @@ const SignupForm = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-center justify-center h-[calc(100vh-80px)] overflow-hidden bg-gray-100 px-4">
+    <div className="flex items-center justify-center h-[calc(100vh-100px)] overflow-hidden px-4">
       <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">Sign Up</h2>
         <Formik

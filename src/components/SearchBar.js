@@ -10,7 +10,7 @@ const SearchBar = ({ query, setQuery, onSearch }) => {
         placeholder="Search for food or restaurants"
         value={query}
         onChange={handleChange}
-        className="w-[280px] sm:w-[300px] px-5 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black placeholder-gray-400"
+        className="w-[200px] sm:w-[300px] px-5 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black placeholder-gray-400"
       />
       <button
         onClick={onSearch}

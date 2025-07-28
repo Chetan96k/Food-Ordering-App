@@ -15,7 +15,6 @@ const Body = () => {
   const [showTopRated, setShowTopRated] = useState(false);
 
   const [filteredList, filterByQuery, resetList] = useSearchFilter(originalList);
-
   const ColorRatedRestaurantCard = withRatingColor(RestaurantCard);
 
   useEffect(() => {
@@ -35,49 +34,41 @@ const Body = () => {
 
   if (onlineStatus === false) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center min-h-[60vh] sm:min-h-[70vh] md:min-h-[80vh] text-center px-4">
         <h2 className="text-2xl font-semibold text-gray-700">You are offline</h2>
       </div>
     );
   }
 
-  console.log("Final List:", finalList);
-
-  return finalList.length === 0 ? (
-    <div className="mt-6 flex flex-col items-center w-full">
+  return (
+    <div className="mt-6 flex flex-col items-center w-full px-2 sm:px-4 md:px-8">
       {/* Search & Filter Section */}
-      <div className="w-full max-w-7xl flex flex-wrap justify-evenly items-center gap-6 px-4 py-6 bg-white">
+      <div className="w-full max-w-7xl flex flex-col sm:flex-row flex-wrap justify-center items-center gap-4 sm:gap-6 px-4 py-6">
         <SearchBar query={query} setQuery={setQuery} onSearch={handleSearch} />
         <TopRatedFilter showTopRated={showTopRated} setShowTopRated={setShowTopRated} />
       </div>
 
-      {/* Shimmer Placeholder */}
-      <div className="w-full max-w-7xl px-4 mt-10">
-        <Shimmer />
-      </div>
-    </div>
-  ) : (
-    <div className="mt-6 flex flex-col items-center w-full">
-      {/* Search & Filter Section */}
-      <div className="w-full max-w-7xl flex flex-wrap justify-evenly items-center gap-6 px-4 py-6 bg-white">
-        <SearchBar query={query} setQuery={setQuery} onSearch={handleSearch} />
-        <TopRatedFilter showTopRated={showTopRated} setShowTopRated={setShowTopRated} />
-      </div>
-
-      {/* Restaurant Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 w-full max-w-7xl mt-10">
-        {finalList.map((restaurant, index) =>
-          restaurant.info ? (
-            <Link
-              to={`/restaurants/${restaurant.info.id}`}
-              key={restaurant.info.id || index}
-              className="hover:scale-[1.0] transition-transform duration-200"
-            >
-              <ColorRatedRestaurantCard resData={restaurant.info} />
-            </Link>
-          ) : null
-        )}
-      </div>
+      {/* Loading State */}
+      {finalList.length === 0 ? (
+        <div className="w-full max-w-7xl px-4 mt-10">
+          <Shimmer />
+        </div>
+      ) : (
+        // Restaurant Cards Grid
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 w-full max-w-7xl mt-10 px-2 sm:px-0">
+          {finalList.map((restaurant, index) =>
+            restaurant.info ? (
+              <Link
+                to={`/restaurants/${restaurant.info.id}`}
+                key={restaurant.info.id || index}
+                className="hover:scale-[1.01] transition-transform duration-200"
+              >
+                <ColorRatedRestaurantCard resData={restaurant.info} />
+              </Link>
+            ) : null
+          )}
+        </div>
+      )}
     </div>
   );
 };
