@@ -1,4 +1,29 @@
+import { useDispatch } from 'react-redux';
+import { addItem } from '../utils/cartSlice';
+
 const MenuAccordian = ({ categoryTitle, itemCards, openIndex, toggleCategory, index }) => {
+
+    const dispatcher = useDispatch();
+
+
+    const handleAddItem = (item) => {
+        const info = item?.card?.info;
+
+        const safeItem = {
+            id: info?.id,
+            name: info?.name,
+            price: typeof info?.price === 'number' ? info.price : 100,
+            imageId: info?.imageId || "",
+            isVeg: info?.isVeg || false,
+            description: info?.description || "",
+            rating: info?.ratings?.aggregatedRating?.rating || null,
+        };
+
+        dispatcher(addItem(safeItem));
+    };
+
+
+
     return (
         <div key={categoryTitle + index} className="mb-8">
             {/* Category Header */}
@@ -57,7 +82,9 @@ const MenuAccordian = ({ categoryTitle, itemCards, openIndex, toggleCategory, in
                                         </div>
                                     )}
 
-                                    <button className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2 px-10 py-2 text-lg font-bold text-green-600 bg-white border border-gray-300 rounded-md shadow-md hover:bg-gray-100 transition">
+                                    <button
+                                        onClick={() => handleAddItem(item)}
+                                        className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2 px-10 py-2 text-lg font-bold text-green-600 bg-white border border-gray-300 rounded-md shadow-md hover:bg-gray-100 transition">
                                         ADD
                                     </button>
                                 </div>
