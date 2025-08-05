@@ -2,7 +2,7 @@ import "../styles/Shimmer.css";
 
 const ShimmerRestaurant = () => {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10">
+    <div data-testid="shimmer" className="max-w-4xl mx-auto px-4 py-10">
       <div className="space-y-6">
         {/* Restaurant name shimmer */}
         <div className="shimmer shimmer-line h-8 w-3/4 sm:w-1/2 rounded-md"></div>

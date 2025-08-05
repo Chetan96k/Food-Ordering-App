@@ -7,6 +7,7 @@ const SearchBar = ({ query, setQuery, onSearch }) => {
     <div className="mx-1 flex flex-wrap items-center gap-4">
       <input
         type="text"
+        data-testid="search"
         placeholder="Search for food or restaurants"
         value={query}
         onChange={handleChange}

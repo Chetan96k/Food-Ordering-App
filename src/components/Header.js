@@ -78,17 +78,17 @@ const Header = () => {
                         <ul className="flex flex-col items-center text-[18px] font-semibold py-4 gap-2">
                             <li className="py-2" onClick={toggleMenu}>
                                 <Link to="/home" className="flex items-center gap-1">
-                                    <Home size={20} /> Home
+                                    Home
                                 </Link>
                             </li>
                             <li className="py-2" onClick={toggleMenu}>
                                 <Link to="/about" className="flex items-center gap-1">
-                                    <Info size={20} /> About Us
+                                    About Us
                                 </Link>
                             </li>
                             <li className="py-2" onClick={toggleMenu}>
                                 <Link to="/help" className="flex items-center gap-1">
-                                    <HelpCircle size={20} /> Help
+                                    Help
                                 </Link>
                             </li>
                             <li
@@ -99,7 +99,7 @@ const Header = () => {
                                 }}
                             >
                                 <Link to="/" className="flex items-center gap-1">
-                                    <User size={20} /> {btnName}
+                                    {btnName}
                                 </Link>
                             </li>
                             <li className="mx-[10px]">

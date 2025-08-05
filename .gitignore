@@ -1,3 +1,5 @@
 /node_modules
 /dist
 /.parcel-cache
+/coverage
+/src/components/__tests__
